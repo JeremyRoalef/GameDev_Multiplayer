@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4295647523745148148}
-  - component: {fileID: 8129911106088834601}
+  - component: {fileID: 385293401450952684}
   m_Layer: 0
   m_Name: Turret Pivot
   m_TagString: Untagged
@@ -33,7 +33,7 @@ Transform:
   m_Father: {fileID: 5274196014179899454}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8129911106088834601
+--- !u!114 &385293401450952684
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,12 +42,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1864094332153665205}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Script: {fileID: 11500000, guid: 333a33f3399ef1e49a9d21ffb1eac28b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SyncPositionX: 0
   SyncPositionY: 0
-  SyncPositionZ: 1
+  SyncPositionZ: 0
   SyncRotAngleX: 0
   SyncRotAngleY: 0
   SyncRotAngleZ: 1
@@ -153,7 +153,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5274196013311696202}
   - component: {fileID: 3808269667599888269}
-  - component: {fileID: 1973411742695738747}
+  - component: {fileID: 1934173356192679120}
   - component: {fileID: 8815314911084101557}
   m_Layer: 0
   m_Name: Tank Treads
@@ -230,7 +230,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1973411742695738747
+--- !u!114 &1934173356192679120
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -239,7 +239,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5274196013311696203}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Script: {fileID: 11500000, guid: 333a33f3399ef1e49a9d21ffb1eac28b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SyncPositionX: 0
@@ -311,7 +311,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5274196014179899454}
   - component: {fileID: 5274196014179899455}
-  - component: {fileID: 7626471891869675276}
+  - component: {fileID: 4121595860766903730}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -352,7 +352,7 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &7626471891869675276
+--- !u!114 &4121595860766903730
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -361,7 +361,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5274196014179899452}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Script: {fileID: 11500000, guid: 333a33f3399ef1e49a9d21ffb1eac28b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SyncPositionX: 1

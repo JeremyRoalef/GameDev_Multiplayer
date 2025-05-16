@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1665520756464608859
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2271526259460621874}
+  m_Layer: 0
+  m_Name: Projectile Spawn Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2271526259460621874
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1665520756464608859}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.169, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4295647523745148148}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1864094332153665205
 GameObject:
   m_ObjectHideFlags: 0
@@ -24,15 +55,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1864094332153665205}
-  m_LocalRotation: {x: -0, y: -0, z: -0.7031769, w: 0.711015}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5640472233840997134}
+  - {fileID: 2271526259460621874}
   m_Father: {fileID: 5274196014179899454}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -89.365}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &385293401450952684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,6 +347,7 @@ GameObject:
   - component: {fileID: 4121595860766903730}
   - component: {fileID: -4524151510467954860}
   - component: {fileID: 3224942383816172458}
+  - component: {fileID: 5444139399321581663}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -439,6 +472,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turretTransform: {fileID: 4295647523745148148}
   inputReader: {fileID: 11400000, guid: 7266732d7780a964f8c12345adad5606, type: 2}
+--- !u!114 &5444139399321581663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5274196014179899452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9db99dcd6dd6c1c4abf85decba7d1c64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serverProjectilePrefab: {fileID: 3648562865258629151, guid: dcd18dad187481547ba5d89eeaa0611c, type: 3}
+  clientProjectilePrefab: {fileID: 7405260259603587393, guid: 5a9ff88475f59ab42bc7f1c70006a3b2, type: 3}
+  inputReader: {fileID: 11400000, guid: 7266732d7780a964f8c12345adad5606, type: 2}
+  projectieSpawnPos: {fileID: 2271526259460621874}
+  projectileSpeed: 10
 --- !u!1 &5303342436738943731
 GameObject:
   m_ObjectHideFlags: 0

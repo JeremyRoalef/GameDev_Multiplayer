@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1864094332153665205}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0.7031769, w: 0.711015}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -32,7 +32,7 @@ Transform:
   - {fileID: 5640472233840997134}
   m_Father: {fileID: 5274196014179899454}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -89.365}
 --- !u!114 &385293401450952684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -314,6 +314,7 @@ GameObject:
   - component: {fileID: 3593843834438340032}
   - component: {fileID: 4121595860766903730}
   - component: {fileID: -4524151510467954860}
+  - component: {fileID: 3224942383816172458}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -424,6 +425,20 @@ MonoBehaviour:
   rb: {fileID: 3593843834438340032}
   moveSpeed: 10
   turnRate: 120
+--- !u!114 &3224942383816172458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5274196014179899452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe0f89bb886239048805cee0a4a0089a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turretTransform: {fileID: 4295647523745148148}
+  inputReader: {fileID: 11400000, guid: 7266732d7780a964f8c12345adad5606, type: 2}
 --- !u!1 &5303342436738943731
 GameObject:
   m_ObjectHideFlags: 0

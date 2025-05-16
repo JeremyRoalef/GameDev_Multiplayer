@@ -18,11 +18,28 @@ public class PlayerShooter : NetworkBehaviour
     [SerializeField]
     Transform projectieSpawnPos;
 
+    [SerializeField]
+    Collider2D playerCollider;
+
+    [SerializeField]
+    GameObject muzzleFlash;
+
     [Header("Settings")]
     [SerializeField]
+    [Tooltip("How fast should the projectile move?")]
     float projectileSpeed;
 
+    [SerializeField]
+    [Tooltip("How many projectile will be fired per second?")]
+    float fireRate;
+
+    [SerializeField]
+    [Tooltip("How long should the muzzle flash effect play for?")]
+    float muzzleFlashDuration;
+
     bool isFiring;
+    float previousFireTime;
+    float muzzleFlashTimer;
 
     public override void OnNetworkSpawn()
     {
@@ -44,11 +61,24 @@ public class PlayerShooter : NetworkBehaviour
 
     private void Update()
     {
+        if (muzzleFlashTimer > 0)
+        {
+            muzzleFlashTimer -= Time.deltaTime;
+            if (muzzleFlashTimer <= 0)
+            {
+                muzzleFlash.SetActive(false);
+            }
+        }
+
         if (!IsOwner) return;
         if (!isFiring) return;
 
+        if (Time.time < (1/fireRate) + previousFireTime) return;
+
         SpawnClientProjectile(projectieSpawnPos.position, projectieSpawnPos.up);
         SpawnServerProjectileServerRPC(projectieSpawnPos.position, projectieSpawnPos.up);
+
+        previousFireTime = Time.time;
     }
 
     /// <summary>
@@ -65,6 +95,17 @@ public class PlayerShooter : NetworkBehaviour
 
         //Set direction
         newProjectile.transform.up = dir;
+
+        muzzleFlash.SetActive(true);
+        muzzleFlashTimer = muzzleFlashDuration;
+
+
+        //Prevent player from interacting with its own projectile
+        Physics2D.IgnoreCollision(playerCollider, newProjectile.GetComponent<Collider2D>());
+        if(newProjectile.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
+        {
+            rb.velocity = rb.transform.up * projectileSpeed;
+        }
     }
 
     /// <summary>
@@ -85,6 +126,14 @@ public class PlayerShooter : NetworkBehaviour
 
         //Tell all clients to make this projectile
         SpawnCientProjectileClientRPC(spawnPos, dir);
+        
+
+        //Prevent player from interacting with its own projectile
+        Physics2D.IgnoreCollision(playerCollider, newProjectile.GetComponent<Collider2D>());
+        if (newProjectile.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
+        {
+            rb.velocity = rb.transform.up * projectileSpeed;
+        }
     }
 
     /// <summary>

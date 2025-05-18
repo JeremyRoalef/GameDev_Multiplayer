@@ -126,7 +126,12 @@ public class PlayerShooter : NetworkBehaviour
 
         //Tell all clients to make this projectile
         SpawnCientProjectileClientRPC(spawnPos, dir);
-        
+
+        //Set owner of projectile in the DealDamageOnContact script
+        if (newProjectile.TryGetComponent<DealDamageOnContact>(out DealDamageOnContact ddoc))
+        {
+            ddoc.SetOwner(OwnerClientId);
+        }
 
         //Prevent player from interacting with its own projectile
         Physics2D.IgnoreCollision(playerCollider, newProjectile.GetComponent<Collider2D>());

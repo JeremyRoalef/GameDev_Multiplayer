@@ -7,10 +7,10 @@ public class PlayerShooter : NetworkBehaviour
 {
     [Header("References")]
     [SerializeField]
-    GameObject serverProjectilePrefab;
+    UnityEngine.GameObject serverProjectilePrefab;
 
     [SerializeField]
-    GameObject clientProjectilePrefab;
+    UnityEngine.GameObject clientProjectilePrefab;
 
     [SerializeField]
     InputReader inputReader;
@@ -22,7 +22,7 @@ public class PlayerShooter : NetworkBehaviour
     Collider2D playerCollider;
 
     [SerializeField]
-    GameObject muzzleFlash;
+    UnityEngine.GameObject muzzleFlash;
 
     [Header("Settings")]
     [SerializeField]
@@ -87,9 +87,9 @@ public class PlayerShooter : NetworkBehaviour
     void SpawnClientProjectile(Vector3 spawnPos, Vector3 dir)
     {
         //Create projectile
-        GameObject newProjectile = Instantiate(
+        UnityEngine.GameObject newProjectile = Instantiate(
             clientProjectilePrefab, 
-            spawnPos, 
+            spawnPos,
             Quaternion.identity
             );
 
@@ -115,7 +115,7 @@ public class PlayerShooter : NetworkBehaviour
     void SpawnServerProjectileServerRPC(Vector3 spawnPos, Vector3 dir)
     {
         //Create projectile
-        GameObject newProjectile = Instantiate(
+        UnityEngine.GameObject newProjectile = Instantiate(
             serverProjectilePrefab,
             spawnPos,
             Quaternion.identity

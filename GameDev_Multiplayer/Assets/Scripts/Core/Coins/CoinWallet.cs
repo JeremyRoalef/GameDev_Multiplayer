@@ -21,4 +21,37 @@ public class CoinWallet : NetworkBehaviour
         if (!IsServer) return;
         TotalCoins.Value += coinValue;
     }
+
+    /// <summary>
+    /// SERVER ONLY! Method to spend coins in wallet.
+    /// </summary>
+    /// <param name="amount"></param>
+    /// <returns>Returns true if sufficient funds</returns>
+    public bool TrySpendCoins(int amount)
+    {
+        if (amount > TotalCoins.Value)
+        {
+            return false;
+        }
+        else
+        {
+            TotalCoins.Value -= amount;
+            return true;
+        }
+    }
+
+    /// <summary>
+    /// Method to check for sufficient funds given the passed amount
+    /// </summary>
+    /// <param name="amount"></param>
+    /// <returns>True if sufficient. False otherwise</returns>
+    public bool CanSpendCoins(int amount)
+    {
+        if (amount > TotalCoins.Value)
+        {
+            return false;
+        }
+
+        return true;
+    }
 }

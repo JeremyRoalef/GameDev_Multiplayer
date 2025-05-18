@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
@@ -19,6 +20,9 @@ public class PlayerShooter : NetworkBehaviour
     Transform projectieSpawnPos;
 
     [SerializeField]
+    CoinWallet wallet;
+
+    [SerializeField]
     Collider2D playerCollider;
 
     [SerializeField]
@@ -37,8 +41,11 @@ public class PlayerShooter : NetworkBehaviour
     [Tooltip("How long should the muzzle flash effect play for?")]
     float muzzleFlashDuration;
 
+    [SerializeField]
+    int costToFire = 1;
+
     bool isFiring;
-    float previousFireTime;
+    bool canShoot = true;
     float muzzleFlashTimer;
 
     public override void OnNetworkSpawn()
@@ -72,13 +79,21 @@ public class PlayerShooter : NetworkBehaviour
 
         if (!IsOwner) return;
         if (!isFiring) return;
+        if (!canShoot) return;
+        
+        if (wallet.CanSpendCoins(costToFire))
+        {
+            ShootWeapon();
+        }
+        else
+        {
+            HandleInsufficientFunds();
+        }
+    }
 
-        if (Time.time < (1/fireRate) + previousFireTime) return;
-
-        SpawnClientProjectile(projectieSpawnPos.position, projectieSpawnPos.up);
-        SpawnServerProjectileServerRPC(projectieSpawnPos.position, projectieSpawnPos.up);
-
-        previousFireTime = Time.time;
+    private void HandleInsufficientFunds()
+    {
+        Debug.Log("You Broke Loser LOL");
     }
 
     /// <summary>
@@ -114,6 +129,8 @@ public class PlayerShooter : NetworkBehaviour
     [ServerRpc]
     void SpawnServerProjectileServerRPC(Vector3 spawnPos, Vector3 dir)
     {
+        if (!wallet.TrySpendCoins(costToFire)) return;
+
         //Create projectile
         UnityEngine.GameObject newProjectile = Instantiate(
             serverProjectilePrefab,
@@ -156,5 +173,22 @@ public class PlayerShooter : NetworkBehaviour
     void HandlePrimaryFire(bool isFiring)
     {
         this.isFiring = isFiring;
+    }
+
+    void ShootWeapon()
+    {
+        //Start shoot delay
+        canShoot = false;
+        StartCoroutine(EnableShoot());
+        
+        //Instantiate bullet
+        SpawnClientProjectile(projectieSpawnPos.position, projectieSpawnPos.up);
+        SpawnServerProjectileServerRPC(projectieSpawnPos.position, projectieSpawnPos.up);
+    }
+
+    IEnumerator EnableShoot()
+    {
+        yield return new WaitForSeconds(1 / fireRate);
+        canShoot = true;
     }
 }

@@ -23,7 +23,7 @@ public class ClientSingleton : MonoBehaviour
         }
     }
 
-    ClientGameManager gameManager;
+    public ClientGameManager GameManager { get; private set; }
 
     private void Start()
     {
@@ -31,9 +31,9 @@ public class ClientSingleton : MonoBehaviour
         instance = this;
     }
 
-    public async Task CreateClient()
+    public async Task<bool> CreateClient()
     {
-        gameManager = new ClientGameManager();
-        await gameManager.InitAsync();
+        GameManager = new ClientGameManager();
+        return await GameManager.InitAsync();
     }
 }

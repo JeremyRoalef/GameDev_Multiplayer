@@ -45,9 +45,16 @@ public class HostGameManager
             return;
         }
 
+
         //Transport setup (allows external connection to game)
+
+        //Store reference to the unity transport on the network manager
         UnityTransport transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
-        RelayServerData relayServerData = new RelayServerData(allocation, "udp");
+
+        //Create the relay server data ("udd" and "dtls" are common)
+        RelayServerData relayServerData = new RelayServerData(allocation, "dtls");
+
+        //Set the relay server data for our transport
         transport.SetRelayServerData(relayServerData);
 
         //The start host button in the network manager game object

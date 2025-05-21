@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class HostSingleton : MonoBehaviour
 {
-    HostGameManager hostGameManager;
+    public HostGameManager GameManager {  get; private set; }
 
     private static HostSingleton instance;
     public static HostSingleton Instance
@@ -25,22 +25,15 @@ public class HostSingleton : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     public void CreateHost()
     {
         //Note: the host is a client, so the init logic doesn't need to happen here
-        hostGameManager = new HostGameManager();
+        GameManager = new HostGameManager();
     }
 }

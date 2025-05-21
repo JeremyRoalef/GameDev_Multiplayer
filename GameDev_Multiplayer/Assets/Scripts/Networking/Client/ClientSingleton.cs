@@ -25,7 +25,7 @@ public class ClientSingleton : MonoBehaviour
 
     public ClientGameManager GameManager { get; private set; }
 
-    private void Start()
+    private void Awake()
     {
         DontDestroyOnLoad(gameObject);
         instance = this;

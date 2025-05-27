@@ -13,7 +13,7 @@ using Unity.Services.Relay.Models;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ClientGameManager
+public class ClientGameManager: IDisposable
 {
     JoinAllocation allocation;
     NetworkClient networkClient;
@@ -82,5 +82,11 @@ public class ClientGameManager
         NetworkManager.Singleton.StartClient();
 
         //Note: Only the host needs to hande scene transition logic. Clients dont need to
+    }
+
+    public void Dispose()
+    {
+        //Dispose the client
+        networkClient?.Dispose();
     }
 }

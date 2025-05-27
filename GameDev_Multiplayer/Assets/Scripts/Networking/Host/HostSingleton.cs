@@ -36,4 +36,10 @@ public class HostSingleton : MonoBehaviour
         //Note: the host is a client, so the init logic doesn't need to happen here
         GameManager = new HostGameManager();
     }
+
+    private void OnDestroy()
+    {
+        //Remove server connections
+        GameManager?.Dispose();
+    }
 }

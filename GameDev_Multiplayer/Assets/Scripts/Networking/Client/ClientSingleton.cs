@@ -36,4 +36,10 @@ public class ClientSingleton : MonoBehaviour
         GameManager = new ClientGameManager();
         return await GameManager.InitAsync();
     }
+
+    private void OnDestroy()
+    {
+        //Remove networking stuff
+        GameManager?.Dispose();
+    }
 }

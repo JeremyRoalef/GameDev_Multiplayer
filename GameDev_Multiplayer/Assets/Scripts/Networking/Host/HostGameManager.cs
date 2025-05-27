@@ -13,7 +13,7 @@ using UnityEngine.SceneManagement;
 using Unity.Services.Lobbies.Models;
 using System.Text;
 using Unity.Services.Authentication;
-public class HostGameManager
+public class HostGameManager : IDisposable
 {
     //Note: no need for init method because the host is a client
 
@@ -142,5 +142,27 @@ public class HostGameManager
             Lobbies.Instance.SendHeartbeatPingAsync(lobbyID);
             yield return delay;
         }
+    }
+
+    public async void Dispose()
+    {
+        HostSingleton.Instance.StopCoroutine(nameof(HeartbeatLobby));
+
+        //Remove our lobby
+        if (!string.IsNullOrEmpty(lobbyID))
+        {
+            try
+            {
+                await Lobbies.Instance.DeleteLobbyAsync(lobbyID);
+            }
+            catch (LobbyServiceException lobbyServiceEx)
+            {
+                Debug.LogWarning(lobbyServiceEx);
+            }
+
+            lobbyID = string.Empty;
+        }
+
+        networkServer?.Dispose();
     }
 }

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -22,7 +21,7 @@ public class NameSelector : MonoBehaviour
     [Range(1, 100)]
     int maxNameLength = 100;
 
-    const string PLAYER_NAME_KEY = "PlayerName";
+    public const string PLAYER_NAME_KEY = "PlayerName";
 
     private void Start()
     {

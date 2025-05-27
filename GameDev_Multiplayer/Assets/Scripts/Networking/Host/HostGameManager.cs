@@ -11,11 +11,14 @@ using Unity.Services.Relay.Models;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Unity.Services.Lobbies.Models;
+using System.Text;
 public class HostGameManager
 {
     //Note: no need for init method because the host is a client
 
     Allocation allocation;
+    NetworkServer networkServer;
+
     string joinCode;
     string lobbyID;
     
@@ -31,7 +34,8 @@ public class HostGameManager
          *  2) Retrieve join code
          *  3) Transport setup
          *  4) Lobby Setup
-         *  5) Start hosting
+         *  5) Store User Data
+         *  6) Start hosting
          */
 
         //Allocation setup
@@ -86,8 +90,9 @@ public class HostGameManager
                 }
             };
 
+            string playerName = PlayerPrefs.GetString(NameSelector.PLAYER_NAME_KEY, "N/A");
             Lobby lobby = await Lobbies.Instance.CreateLobbyAsync(
-                "My Lobby", 
+                $"{playerName}'s Lobby", 
                 MAX_CONNECTIONS, 
                 lobbyOptions
                 );
@@ -103,6 +108,20 @@ public class HostGameManager
             return;
         }
 
+        //Create a new network server game object (my NetworkServer script)
+        networkServer = new NetworkServer(NetworkManager.Singleton);
+
+        //Set up user data
+        UserData userData = new UserData()
+        {
+            userName = PlayerPrefs.GetString(NameSelector.PLAYER_NAME_KEY, "N/A")
+        };
+        //Convert user data to a bytearray
+        string payload = JsonUtility.ToJson(userData);
+        byte[] payloadBytes = Encoding.UTF8.GetBytes(payload);
+
+        //store user data in the server
+        NetworkManager.Singleton.NetworkConfig.ConnectionData = payloadBytes;
 
         //The start host button in the network manager game object
         NetworkManager.Singleton.StartHost();

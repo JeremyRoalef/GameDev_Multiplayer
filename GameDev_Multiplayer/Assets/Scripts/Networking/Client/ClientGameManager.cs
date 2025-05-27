@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
@@ -58,6 +59,17 @@ public class ClientGameManager
 
         //Set the relay server data for our transport
         transport.SetRelayServerData(relayServerData);
+
+
+        //Set up user data
+        UserData userData = new UserData()
+        {
+            userName = PlayerPrefs.GetString(NameSelector.PLAYER_NAME_KEY, "N/A")
+        };
+        string payload = JsonUtility.ToJson(userData);
+        byte[] payloadBytes = Encoding.UTF8.GetBytes(payload);
+        NetworkManager.Singleton.NetworkConfig.ConnectionData = payloadBytes;
+
 
         //The start host button in the network manager game object
         NetworkManager.Singleton.StartClient();

@@ -12,6 +12,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Unity.Services.Lobbies.Models;
 using System.Text;
+using Unity.Services.Authentication;
 public class HostGameManager
 {
     //Note: no need for init method because the host is a client
@@ -114,7 +115,8 @@ public class HostGameManager
         //Set up user data
         UserData userData = new UserData()
         {
-            userName = PlayerPrefs.GetString(NameSelector.PLAYER_NAME_KEY, "N/A")
+            userName = PlayerPrefs.GetString(NameSelector.PLAYER_NAME_KEY, "N/A"),
+            userAuthID = AuthenticationService.Instance.PlayerId
         };
         //Convert user data to a bytearray
         string payload = JsonUtility.ToJson(userData);

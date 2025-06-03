@@ -18,7 +18,7 @@ public class HostGameManager : IDisposable
     //Note: no need for init method because the host is a client
 
     Allocation allocation;
-    NetworkServer networkServer;
+    public NetworkServer NetworkServer {  get; private set; }
 
     string joinCode;
     string lobbyID;
@@ -110,7 +110,7 @@ public class HostGameManager : IDisposable
         }
 
         //Create a new network server game object (my NetworkServer script)
-        networkServer = new NetworkServer(NetworkManager.Singleton);
+        NetworkServer = new NetworkServer(NetworkManager.Singleton);
 
         //Set up user data
         UserData userData = new UserData()
@@ -163,6 +163,6 @@ public class HostGameManager : IDisposable
             lobbyID = string.Empty;
         }
 
-        networkServer?.Dispose();
+        NetworkServer?.Dispose();
     }
 }

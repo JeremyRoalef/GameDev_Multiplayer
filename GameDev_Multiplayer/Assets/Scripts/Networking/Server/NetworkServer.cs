@@ -81,4 +81,28 @@ public class NetworkServer: IDisposable
             networkManager.Shutdown();
         }
     }
+
+    public UserData GetUserDataByClientID(ulong clientID)
+    {
+        if (clientIDToAuth.TryGetValue(clientID, out string authID))
+        {
+            if (authIDToUserData.TryGetValue(authID, out UserData userData))
+            {
+                //User data found
+                return userData;
+            }
+            //No authorization ID found
+            else
+            {
+                Debug.LogWarning("No Auth ID found");
+                return null;
+            }
+        }
+        //No client ID found
+        else
+        {
+            Debug.LogWarning("No Client ID found");
+            return null;
+        }
+    }
 }

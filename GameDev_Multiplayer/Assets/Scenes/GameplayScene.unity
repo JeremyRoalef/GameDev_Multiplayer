@@ -3976,6 +3976,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1258361915}
+  - component: {fileID: 1258361916}
   - component: {fileID: 1258361914}
   m_Layer: 0
   m_Name: Game HUD
@@ -3996,6 +3997,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d74c1e19d164a2049ba61539c9bd0c90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leaderboardEntityHolder: {fileID: 1131525584}
+  leaderboardEntityPrefab: {fileID: 403466105051100137, guid: 1418f896cec126e4fbc073c3adc56180, type: 3}
 --- !u!4 &1258361915
 Transform:
   m_ObjectHideFlags: 0
@@ -4012,6 +4015,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1258361916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258361913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 4158817837
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!4 &1276258016 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9189608353995038484, guid: 13f68cc29c721c24c85ad82e80f66145, type: 3}

@@ -13,6 +13,9 @@ public class Leaderboard : NetworkBehaviour
     [SerializeField]
     LeaderboardEntityDisplay leaderboardEntityPrefab;
 
+    [SerializeField]
+    int maxEntitiesOnLeaderboard = 8;
+
     NetworkList<LeaderboardEntityState> leaderboardEntities;
     List<LeaderboardEntityDisplay> entityDisplays = new List<LeaderboardEntityDisplay>();
 
@@ -138,6 +141,35 @@ public class Leaderboard : NetworkBehaviour
                     displayToUpdate.UpdateCoins(changeEvent.Value.Coins);
                 }
                 break;
+        }
+
+        //Sort the list from largest to smallest
+        entityDisplays.Sort((element1, element2) => element2.Coins.CompareTo(element1.Coins));
+
+        for (int i = 0; i < entityDisplays.Count; i++)
+        {
+            //Set the order of the child entity display in hierarchy to the order in the list
+            entityDisplays[i].transform.SetSiblingIndex(i);
+
+            //Update the display text for the entity display
+            entityDisplays[i].UpdateDisplayText();
+
+            //Show the top max entities on leaderboard
+            bool shouldShow = i <= maxEntitiesOnLeaderboard - 1;
+            entityDisplays[i].gameObject.SetActive(shouldShow);
+
+
+            //If the player is not on the leaderboard, remove the last person on the leaderboard and show the player instead
+            LeaderboardEntityDisplay myDisplay =
+                entityDisplays.FirstOrDefault(x => x.ClientID == NetworkManager.Singleton.LocalClientId);
+            if (myDisplay != null)
+            {
+                if (myDisplay.transform.GetSiblingIndex() >= maxEntitiesOnLeaderboard)
+                {
+                    leaderboardEntityHolder.GetChild(maxEntitiesOnLeaderboard-1).gameObject.SetActive(false);
+                    myDisplay.gameObject.SetActive(true);
+                }
+            }
         }
     }
 

@@ -33,7 +33,7 @@ public class NameSelector : MonoBehaviour
             return;
         }
 
-        //Get the player's name from their preferences. If no string, default to empty
+        //Get the player's playerName from their preferences. If no string, default to empty
         nameField.text = PlayerPrefs.GetString(PLAYER_NAME_KEY, string.Empty);
         HandleNameChanged();
     }
@@ -46,7 +46,7 @@ public class NameSelector : MonoBehaviour
 
     public void Connect()
     {
-        //Set the player's name & store it to preferences
+        //Set the player's playerName & store it to preferences
         PlayerPrefs.SetString(PLAYER_NAME_KEY, nameField.text);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }

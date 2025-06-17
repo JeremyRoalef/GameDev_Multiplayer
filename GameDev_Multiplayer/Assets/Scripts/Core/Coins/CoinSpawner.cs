@@ -37,7 +37,7 @@ public class CoinSpawner : NetworkBehaviour
         //Get the radius of the coin
         radius = coinPrefab.GetComponent<CircleCollider2D>().radius;
 
-        //Spawn coins
+        //Spawn Coins
         for (int i = 0; i < maxCoins; i++)
         {
             SpawnCoin();

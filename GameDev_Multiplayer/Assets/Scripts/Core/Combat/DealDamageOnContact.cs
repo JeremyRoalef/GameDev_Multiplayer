@@ -32,7 +32,7 @@ public class DealDamageOnContact : MonoBehaviour
     /// <summary>
     /// Sets the owner of the projectile to prevent collision logic with projectile's owner
     /// </summary>
-    /// <param name="ownerClientID">Big integer</param>
+    /// <param playerName="ownerClientID">Big integer</param>
     public void SetOwner(ulong ownerClientID)
     {
         this.clientOwnerID = ownerClientID;

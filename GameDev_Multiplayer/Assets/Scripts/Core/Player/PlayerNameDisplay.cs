@@ -15,7 +15,7 @@ public class PlayerNameDisplay : MonoBehaviour
 
     private void Start()
     {
-        //Handle initial name value
+        //Handle initial playerName value
         HandlePlayerNameChanged(string.Empty, player.PlayerName.Value.ToString());
 
         //Handle value changing

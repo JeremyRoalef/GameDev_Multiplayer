@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -13,6 +14,7 @@ public class Leaderboard : NetworkBehaviour
     LeaderboardEntityDisplay leaderboardEntityPrefab;
 
     NetworkList<LeaderboardEntityState> leaderboardEntities;
+    List<LeaderboardEntityDisplay> entityDisplays = new List<LeaderboardEntityDisplay>();
 
     private void Awake()
     {
@@ -95,9 +97,40 @@ public class Leaderboard : NetworkBehaviour
         switch (changeEvent.Type)
         {
             case NetworkListEvent<LeaderboardEntityState>.EventType.Add:
-                Instantiate(leaderboardEntityPrefab, leaderboardEntityHolder);
+                //If there are no client IDs with this client's ID, add it
+                if (!entityDisplays.Any(x => x.ClientID == changeEvent.Value.ClientID))
+                {
+                    LeaderboardEntityDisplay leaderboardEntity = 
+                        Instantiate(leaderboardEntityPrefab, leaderboardEntityHolder);
+
+                    leaderboardEntity.Initialize(
+                        changeEvent.Value.ClientID, 
+                        changeEvent.Value.PlayerName, 
+                        changeEvent.Value.Coins
+                        );
+
+                    entityDisplays.Add(leaderboardEntity);
+                }
                 break;
             case NetworkListEvent<LeaderboardEntityState>.EventType.Remove:
+                LeaderboardEntityDisplay displayToRemove = 
+                    entityDisplays.FirstOrDefault(x => x.ClientID == changeEvent.Value.ClientID);
+
+                if (displayToRemove != null)
+                {
+                    displayToRemove.transform.parent = null;
+                    Destroy(displayToRemove.gameObject);
+                    entityDisplays.Remove(displayToRemove);
+                }
+                break;
+            case NetworkListEvent<LeaderboardEntityState>.EventType.Value:
+                LeaderboardEntityDisplay displayToUpdate =
+                    entityDisplays.FirstOrDefault(x => x.ClientID == changeEvent.Value.ClientID);
+
+                if (displayToUpdate != null)
+                {
+                    displayToUpdate.UpdateCoins(changeEvent.Value.Coins);
+                }
                 break;
         }
     }

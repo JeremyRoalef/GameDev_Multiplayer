@@ -12,7 +12,7 @@ public static class AuthenticationWrapper
     /// <summary>
     /// Method to authenticate the player. This attempts to sign the player in anonymously
     /// </summary>
-    /// <param name="maxRetries"></param>
+    /// <param playerName="maxRetries"></param>
     /// <returns></returns>
     public static async Task<AuthState> DoAuth(int maxRetries = 5)
     {

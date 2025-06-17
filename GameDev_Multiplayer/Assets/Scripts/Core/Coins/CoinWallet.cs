@@ -23,9 +23,9 @@ public class CoinWallet : NetworkBehaviour
     }
 
     /// <summary>
-    /// SERVER ONLY! Method to spend coins in wallet.
+    /// SERVER ONLY! Method to spend Coins in wallet.
     /// </summary>
-    /// <param name="amount"></param>
+    /// <param playerName="amount"></param>
     /// <returns>Returns true if sufficient funds</returns>
     public bool TrySpendCoins(int amount)
     {
@@ -43,7 +43,7 @@ public class CoinWallet : NetworkBehaviour
     /// <summary>
     /// Method to check for sufficient funds given the passed amount
     /// </summary>
-    /// <param name="amount"></param>
+    /// <param playerName="amount"></param>
     /// <returns>True if sufficient. False otherwise</returns>
     public bool CanSpendCoins(int amount)
     {

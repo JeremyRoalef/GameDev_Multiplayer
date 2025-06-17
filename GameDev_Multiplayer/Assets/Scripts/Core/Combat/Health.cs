@@ -36,7 +36,7 @@ public class Health : NetworkBehaviour
     /// <summary>
     /// The amount of health the player should restore. Pass value as a positive value
     /// </summary>
-    /// <param name="healthValue"></param>
+    /// <param playerName="healthValue"></param>
     public void RestoreHealth(int healthValue)
     {
         ModifyHealth(healthValue);
@@ -45,7 +45,7 @@ public class Health : NetworkBehaviour
     /// <summary>
     /// Method to modify the CurrentHealth network variable value and handle death condition
     /// </summary>
-    /// <param name="value"></param>
+    /// <param playerName="value"></param>
     void ModifyHealth(int value)
     {
         if (isDead) return;

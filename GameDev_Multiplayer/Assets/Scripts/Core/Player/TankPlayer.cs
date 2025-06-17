@@ -15,6 +15,9 @@ public class TankPlayer : NetworkBehaviour
     [field: SerializeField]
     public Health Health {  get; private set; }
 
+    [field: SerializeField]
+    public CoinWallet Wallet { get; private set; }
+
     [Header("Settings")]
     [SerializeField]
     int cameraPriority = 100;

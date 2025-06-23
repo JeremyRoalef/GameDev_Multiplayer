@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &7238545263495617828
+--- !u!1001 &2535097956487696865
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -56,67 +56,42 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 951099334
       objectReference: {fileID: 0}
+    - target: {fileID: 7483018247797984811, guid: bf7b464862d6ab640a38e53ce08904e5, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 7bfd0a0977e81b84a8f1d12195e5883a, type: 3}
     - target: {fileID: 9046589437561903352, guid: bf7b464862d6ab640a38e53ce08904e5, type: 3}
       propertyPath: m_Name
-      value: Respawning Coin
+      value: Bounty Coin
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 9046589437561903352, guid: bf7b464862d6ab640a38e53ce08904e5, type: 3}
-      insertIndex: 2
-      addedObject: {fileID: -3239460563810439353}
-    - targetCorrespondingSourceObject: {fileID: 9046589437561903352, guid: bf7b464862d6ab640a38e53ce08904e5, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -49545759825018824}
+      addedObject: {fileID: 660097889187473964}
   m_SourcePrefab: {fileID: 100100000, guid: bf7b464862d6ab640a38e53ce08904e5, type: 3}
---- !u!212 &265008569424663311 stripped
+--- !u!212 &4969580746747895754 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 7483018247797984811, guid: bf7b464862d6ab640a38e53ce08904e5, type: 3}
-  m_PrefabInstance: {fileID: 7238545263495617828}
+  m_PrefabInstance: {fileID: 2535097956487696865}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1873369598029694428 stripped
+--- !u!1 &6820010049044810009 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9046589437561903352, guid: bf7b464862d6ab640a38e53ce08904e5, type: 3}
-  m_PrefabInstance: {fileID: 7238545263495617828}
+  m_PrefabInstance: {fileID: 2535097956487696865}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &-3239460563810439353
+--- !u!114 &660097889187473964
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1873369598029694428}
+  m_GameObject: {fileID: 6820010049044810009}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Script: {fileID: 11500000, guid: c16e25cd675c5b44c94ffffdfd64a588, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SyncPositionX: 1
-  SyncPositionY: 1
-  SyncPositionZ: 0
-  SyncRotAngleX: 0
-  SyncRotAngleY: 0
-  SyncRotAngleZ: 0
-  SyncScaleX: 0
-  SyncScaleY: 0
-  SyncScaleZ: 0
-  PositionThreshold: 0.001
-  RotAngleThreshold: 0.01
-  ScaleThreshold: 0.01
-  InLocalSpace: 0
-  Interpolate: 0
---- !u!114 &-49545759825018824
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1873369598029694428}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9deda164d1a57424ea38d61383a41811, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spriteRenderer: {fileID: 265008569424663311}
+  spriteRenderer: {fileID: 4969580746747895754}

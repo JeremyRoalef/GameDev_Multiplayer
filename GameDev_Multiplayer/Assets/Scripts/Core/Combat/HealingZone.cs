@@ -19,6 +19,7 @@ public class HealingZone : NetworkBehaviour
     float healCooldown = 15f;
 
     [SerializeField]
+    [Tooltip("The ticks per second that the players in zone will be healed at")]
     float healthTickRate = 0.5f;
 
     [SerializeField]
@@ -27,7 +28,55 @@ public class HealingZone : NetworkBehaviour
     [SerializeField]
     int healthPerTick;
 
+    [SerializeField]
+    [Tooltip("The number of ticks per second that the zone will recharge at")]
+    float healingZoneRechargeTickRate = 10f;
+
+    [SerializeField]
+    int healingZonePowerRechargePerTick = 1;
+
     List<TankPlayer> playersInZone = new List<TankPlayer>();
+
+    NetworkVariable<int> HealPower = new NetworkVariable<int>();
+
+    WaitForSecondsRealtime tickWaitDuration;
+    WaitForSecondsRealtime cooldownWaitDuration;
+    WaitForSecondsRealtime rechargeTickWaitDuration;
+
+    bool isOnCooldown;
+    bool canRechargeZone;
+
+    public override void OnNetworkSpawn()
+    {
+        if (IsClient)
+        {
+            //update UI
+            HealPower.OnValueChanged += HandleHealPowerChanged;
+            HandleHealPowerChanged(0, HealPower.Value);
+        }
+
+        if (IsServer)
+        {
+            tickWaitDuration = new WaitForSecondsRealtime(1 / healthTickRate);
+            cooldownWaitDuration = new WaitForSecondsRealtime(healCooldown);
+            rechargeTickWaitDuration = new WaitForSecondsRealtime(1 / healingZoneRechargeTickRate);
+            HealPower.Value = maxHealPower;
+        }
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        if (IsClient)
+        {
+            //update UI
+            HealPower.OnValueChanged -= HandleHealPowerChanged;
+        }
+
+        if (IsServer)
+        {
+            StopAllCoroutines();
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -36,7 +85,12 @@ public class HealingZone : NetworkBehaviour
         if (other.attachedRigidbody.TryGetComponent<TankPlayer>(out TankPlayer tankPlayer))
         {
             playersInZone.Add(tankPlayer);
-            Debug.Log("Player in zone");
+            if (playersInZone.Count == 1)
+            {
+                Debug.Log("Starting to heal players in zone");
+                StartCoroutine(HealPlayersInZone());
+                canRechargeZone = false;
+            }
         }
     }
 
@@ -47,7 +101,86 @@ public class HealingZone : NetworkBehaviour
         if (other.attachedRigidbody.TryGetComponent<TankPlayer>(out TankPlayer tankPlayer))
         {
             playersInZone.Remove(tankPlayer);
-            Debug.Log("Player left zone");
+            if (playersInZone.Count <= 0)
+            {
+                canRechargeZone = true;
+                Debug.Log("No players in zone to heal");
+                StopCoroutine(HealPlayersInZone());
+                StartCoroutine(RechargeHealingZone());
+            }
+        }
+    }
+
+    void HandleHealPowerChanged(int oldValue, int newValue)
+    {
+        remainingHealthBar.fillAmount = (float)newValue / maxHealPower;
+    }
+    
+    IEnumerator HealPlayersInZone()
+    {
+        while (true)
+        {
+            if (!isOnCooldown)
+            {
+                //Wait to heal players
+                yield return tickWaitDuration;
+
+                //Heal players in zone
+                foreach (TankPlayer player in playersInZone)
+                {
+                    //Conditions to prevent healing
+                    if (HealPower.Value <= 0) continue;
+                    if (player.Health.CurrentHealth.Value == player.Health.MaxHealth) continue;
+                    if (!player.Wallet.TrySpendCoins(costToHealPerTick)) continue;
+
+
+                    Debug.Log($"Healing {player.NetworkObject.name}...");
+
+                    player.Health.RestoreHealth(healthPerTick);
+                    HealPower.Value--;
+                }
+
+                //Check if out of heal power
+                if (HealPower.Value <= 0 && !isOnCooldown)
+                {
+                    StartCoroutine(ResetHealZone());
+                }
+            }
+            else
+            {
+                //Wait until next frame for the next check
+                yield return new WaitForEndOfFrame();
+            }
+        }
+    }
+
+    IEnumerator ResetHealZone()
+    {
+        Debug.Log("Heal zone on cooldown...");
+        isOnCooldown = true;
+        yield return cooldownWaitDuration;
+        Debug.Log("Heal zone off cooldown. Ready to heal");
+        isOnCooldown = false;
+        HealPower.Value = maxHealPower;
+    }
+
+    IEnumerator RechargeHealingZone()
+    {
+        while (canRechargeZone)
+        {
+            Debug.Log("Recharging healing zone...");
+            //Recharge the health zone
+            yield return rechargeTickWaitDuration;
+
+            HealPower.Value += healingZonePowerRechargePerTick;
+            HealPower.Value = Mathf.Clamp(HealPower.Value, 0, maxHealPower);
+
+            if (HealPower.Value == maxHealPower)
+            {
+                Debug.Log("healing zone fully restored");
+                //Health station full. no need to continue coroutine
+                break;
+            }
         }
     }
 }

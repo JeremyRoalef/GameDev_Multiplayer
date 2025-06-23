@@ -170,7 +170,7 @@ Transform:
   m_Children:
   - {fileID: 5689682802314162894}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6558466901976281740
 MonoBehaviour:
@@ -300,6 +300,8 @@ MonoBehaviour:
   remainingHealthBar: {fileID: 1948971915064214128}
   maxHealPower: 30
   healCooldown: 15
-  healthTickRate: 0.5
+  healthTickRate: 3
   costToHealPerTick: 1
   healthPerTick: 4
+  healingZoneRechargeTickRate: 10
+  healingZonePowerRechargePerTick: 1

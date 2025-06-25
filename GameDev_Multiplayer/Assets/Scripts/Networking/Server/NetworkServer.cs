@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class NetworkServer: IDisposable
 {
+    public Action<string> OnClientLeave;
+
     NetworkManager networkManager;
 
     /// <summary>
@@ -67,6 +69,7 @@ public class NetworkServer: IDisposable
         {
             clientIDToAuth.Remove(clientID);
             authIDToUserData.Remove(authId);
+            OnClientLeave?.Invoke(authId);
         }
     }
 

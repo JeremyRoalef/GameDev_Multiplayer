@@ -28,11 +28,8 @@ public class NetworkClient : IDisposable
         }
     }
 
-    private void OnClientDisconnect(ulong clientID)
+    public void Disconnect()
     {
-        //Check if it's the client
-        if (clientID != 0 && clientID != networkManager.LocalClientId) return;
-        
         //If disconnected from server, return to menu
         if (SceneManager.GetActiveScene().name != MENU_SCENE_NAME)
         {
@@ -44,5 +41,13 @@ public class NetworkClient : IDisposable
         {
             networkManager.Shutdown();
         }
+    }
+
+    private void OnClientDisconnect(ulong clientID)
+    {
+        //Check if it's the client
+        if (clientID != 0 && clientID != networkManager.LocalClientId) return;
+
+        Disconnect();
     }
 }

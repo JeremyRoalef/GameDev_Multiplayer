@@ -128,6 +128,8 @@ public class HostGameManager : IDisposable
         //The start host button in the network manager game object
         NetworkManager.Singleton.StartHost();
 
+        NetworkServer.OnClientLeave += HandleClientLeave;
+
         NetworkManager.Singleton.SceneManager.LoadScene(GAME_SCENE_STRING, LoadSceneMode.Single);
     }
 
@@ -163,6 +165,26 @@ public class HostGameManager : IDisposable
             lobbyID = string.Empty;
         }
 
+        NetworkServer.OnClientLeave -= HandleClientLeave;
+
         NetworkServer?.Dispose();
+    }
+
+    public void Shutdown()
+    {
+        Dispose();
+    }
+
+    private async void HandleClientLeave(string authID)
+    {
+        try
+        {
+            //Remove player from lobby
+            await LobbyService.Instance.RemovePlayerAsync(lobbyID, authID);
+        }
+        catch (LobbyServiceException lobbyServiceEx)
+        {
+            Debug.Log(lobbyServiceEx);
+        }
     }
 }

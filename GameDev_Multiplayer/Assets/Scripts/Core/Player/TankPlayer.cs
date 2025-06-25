@@ -18,9 +18,24 @@ public class TankPlayer : NetworkBehaviour
     [field: SerializeField]
     public CoinWallet Wallet { get; private set; }
 
+    [SerializeField]
+    SpriteRenderer playerMiniMapSpriteRenderer;
+
     [Header("Settings")]
     [SerializeField]
     int cameraPriority = 100;
+
+    [SerializeField]
+    [Tooltip("The color the player will appear as on the mini map")]
+    Color selfPlayerMiniMapColor = Color.blue;
+
+    [SerializeField]
+    [Tooltip("The color friendly players will appear as on the mini map")]
+    Color friendlyPlayerMiniMapColor = Color.green;
+
+    [SerializeField]
+    [Tooltip("The color enemy players will appear as on the mini map")]
+    Color enemyPlayerMiniMapColor = Color.red;
 
     public static event Action<TankPlayer> OnAnyPlayerSpawned;
     public static event Action<TankPlayer> OnAnyPlayerDespawned;
@@ -44,6 +59,11 @@ public class TankPlayer : NetworkBehaviour
         if (IsOwner)
         {
             virtualCamera.Priority = cameraPriority;
+            playerMiniMapSpriteRenderer.color = selfPlayerMiniMapColor;
+        }
+        else
+        {
+            playerMiniMapSpriteRenderer.color = enemyPlayerMiniMapColor;
         }
     }
 

@@ -116,7 +116,7 @@ public class HostGameManager : IDisposable
         UserData userData = new UserData()
         {
             userName = PlayerPrefs.GetString(NameSelector.PLAYER_NAME_KEY, "N/A"),
-            userAuthID = AuthenticationService.Instance.PlayerId
+            userAuthId = AuthenticationService.Instance.PlayerId
         };
         //Convert user data to a bytearray
         string payload = JsonUtility.ToJson(userData);

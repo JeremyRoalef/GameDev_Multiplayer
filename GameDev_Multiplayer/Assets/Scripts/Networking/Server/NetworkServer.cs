@@ -39,8 +39,8 @@ public class NetworkServer: IDisposable
         UserData userData = JsonUtility.FromJson<UserData>(payload);
 
         //Add client information to server storage
-        clientIDToAuth[request.ClientNetworkId] = userData.userAuthID;
-        authIDToUserData[userData.userAuthID] = userData;
+        clientIDToAuth[request.ClientNetworkId] = userData.userAuthId;
+        authIDToUserData[userData.userAuthId] = userData;
 
 
         Debug.Log(userData.userName);
